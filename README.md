@@ -1,5 +1,31 @@
-PostgreSQLの公式DockerImageでPG_Trgmで日本語が扱えなかったため、[use-PGroongaブランチで、PGroonga対応に変更中
+PostgreSQLの公式DockerImageを使ってPG_Trgmでフルテキストのサーチをためしましたが日本語がうまく扱えなかったため、use-PGroongaブランチでPGroonga対応に変更中です。
 
+以下の変更でPGroongaサーチできました。
+...
+public string CreateFullTextWhereItem(string itemsTableName, string paramName)
+{
+   return $"(\"{itemsTableName}\".\"FullText\" &@~ @{paramName}#CommandCount#)";
+}
+private static string FullTextClause(string word)
+{
+   var data = new List<string> { word };
+   var katakana = CSharp.Japanese.Kanaxs.KanaEx.ToKatakana(word);
+   var hiragana = CSharp.Japanese.Kanaxs.KanaEx.ToHiragana(word);
+   if (word != katakana) data.Add(katakana);
+   if (word != hiragana) data.Add(hiragana);
+   return "(" + data
+      .SelectMany(part => new List<string>
+      {
+   part,
+   ForwardMatchSearch(part: part)
+      })
+      .Where(o => o != null)
+      .Distinct()
+      .Select(o => "\"" + o + "\"")
+      .Join(" OR ") + ")";
+}
+
+...
 以下、オリジナルのREADME
 
 
