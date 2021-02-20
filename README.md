@@ -1,3 +1,8 @@
+PostgreSQLの公式DockerImageでPG_Trgmで日本語が扱えなかったため、[use-PGroongaブランチで、PGroonga対応に変更中
+
+以下、オリジナルのREADME
+
+
 ![image](https://user-images.githubusercontent.com/12204265/48656589-f785b200-ea69-11e8-8278-3cf084ccbd27.png)
 
 ## プリザンター クロスプラットフォーム beta 版

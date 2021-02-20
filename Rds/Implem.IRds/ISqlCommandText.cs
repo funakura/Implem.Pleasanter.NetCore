@@ -5,6 +5,12 @@ namespace Implem.IRds
 {
     public interface ISqlCommandText
     {
+        string FullTextEngine
+        {
+            get;
+            set;
+        }
+
         string CreateSelectIdentity(
             string template,
             string identityColumnName);

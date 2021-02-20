@@ -6,5 +6,6 @@
         public bool CreateIndexes;
         public int PageSize;
         public bool DisableCrossSearch;
+        public string FullTextEngine;
     }
 }

@@ -6,6 +6,13 @@ namespace Implem.Factory
 {
     public static class RdsFactory
     {
+        public static ISqlObjectFactory Create(string dbms,string FullTextEngine)
+        {
+            ISqlObjectFactory factory;
+            factory = Create(dbms);
+            factory.SqlCommandText.FullTextEngine = FullTextEngine;
+            return factory;
+        }
         public static ISqlObjectFactory Create(string dbms)
         {
             switch (dbms)

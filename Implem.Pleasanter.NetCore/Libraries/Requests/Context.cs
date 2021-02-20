@@ -713,7 +713,7 @@ namespace Implem.Pleasanter.NetCore.Libraries.Requests
 
         private static readonly Lazy<ISqlObjectFactory> _sqlObjectFactory = new Lazy<ISqlObjectFactory>(() =>
         {
-            return RdsFactory.Create(Parameters.Rds.Dbms);
+            return RdsFactory.Create(Parameters.Rds.Dbms, Parameters.Search.FullTextEngine);
         });
 
         protected override ISqlObjectFactory GetSqlObjectFactory()

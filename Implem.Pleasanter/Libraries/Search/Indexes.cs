@@ -900,16 +900,35 @@ namespace Implem.Pleasanter.Libraries.Search
             var hiragana = CSharp.Japanese.Kanaxs.KanaEx.ToHiragana(word);
             if (word != katakana) data.Add(katakana);
             if (word != hiragana) data.Add(hiragana);
-            return "(" + data
-                .SelectMany(part => new List<string>
-                {
+
+            switch (Parameters.Search.FullTextEngine)
+            {
+                case "":
+                case "PG_Trgm":
+                    return "(" + data
+                        .SelectMany(part => new List<string>
+                        {
                     part,
                     ForwardMatchSearch(part: part)
-                })
-                .Where(o => o != null)
-                .Distinct()
-                .Select(o => "\"" + o + "\"")
-                .Join(" or ") + ")";
+                        })
+                        .Where(o => o != null)
+                        .Distinct()
+                        .Select(o => "\"" + o + "\"")
+                        .Join(" or ") + ")";
+                case "PGroonga":
+                    return "(" + data
+                        .SelectMany(part => new List<string>
+                        {
+                    part,
+                    ForwardMatchSearch(part: part)
+                        })
+                        .Where(o => o != null)
+                        .Distinct()
+                        .Select(o => "\"" + o + "\"")
+                        .Join(" OR ") + ")";
+                default:
+                    throw new NotSupportedException($"FullTextEngine[{Parameters.Search.FullTextEngine}] is not supported by Pleasanter.");
+            }
         }
 
         /// <summary>

@@ -7,6 +7,16 @@ namespace Implem.PostgreSql
 {
     internal class PostgreSqlCommandText : ISqlCommandText
     {
+        private static string fullTextEngine = "PG_Trgm";
+        public string FullTextEngine
+        {
+            set { fullTextEngine = value; }
+            get
+            {
+                return fullTextEngine;
+            }
+        }
+
         public string CreateDelete(string template)
         {
             return template + " RETURNING * ";
@@ -81,7 +91,16 @@ namespace Implem.PostgreSql
 
         public string CreateFullTextWhereItem(string itemsTableName, string paramName)
         {
-            return $"(\"{itemsTableName}\".\"FullText\" %> @{paramName}#CommandCount#)";
+            switch (fullTextEngine)
+            {
+                case "":
+                case "PG_Trgm":
+                    return $"(\"{itemsTableName}\".\"FullText\" %> @{paramName}#CommandCount#)";
+                case "PGroonga":
+                    return $"(\"{itemsTableName}\".\"FullText\" &@~ @{paramName}#CommandCount#)";
+                default:
+                    throw new NotSupportedException($"FullTextEngine[{fullTextEngine}] is not supported by Pleasanter.");
+            }
         }
 
         public string CreateFullTextWhereBinary(

@@ -6,6 +6,15 @@ namespace Implem.SqlServer
 {
     internal class SqlServerCommandText : ISqlCommandText
     {
+        public string FullTextEngine
+        {
+            set { }
+            get
+            {
+                return "";
+            }
+        }
+
         public string CreateDelete(string template)
         {
             return template + " ; select @@rowcount ";
