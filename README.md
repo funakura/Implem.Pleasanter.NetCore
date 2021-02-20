@@ -1,6 +1,7 @@
 PostgreSQLの公式DockerImageを使ってPG_Trgmでフルテキストのサーチをためしましたが日本語がうまく扱えなかったため、use-PGroongaブランチでPGroonga対応に変更中です。
 
 以下の変更でPGroongaサーチできました。
+(事前にPGroongaのIndex作成は必要です。)
 ```
 public string CreateFullTextWhereItem(string itemsTableName, string paramName)
 {
