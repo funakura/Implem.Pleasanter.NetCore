@@ -1,4 +1,4 @@
-Pleasanterの評価でPostgreSQLの公式DockerImageを使ってフルテキストのサーチを試しましたが、PG_Trgmで日本語がうまく扱えませんでした。私の技術力では解決できませんでしたので、Pleasanterのソースコードを変更してPGroonga対応にしてみました。(use-PGroongaブランチ)
+PostgreSQLの公式DockerImageのPG_Trgmで日本語検索がうまく扱えませんでした。私の技術力では解決できませんでしたので、Pleasanterのソースコードを変更してPGroonga対応にしてみました。(use-PGroongaブランチ)
 
 以下、オリジナルのREADME.md
 
