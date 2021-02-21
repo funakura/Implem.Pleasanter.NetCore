@@ -35,8 +35,8 @@ private static string FullTextClause(string word)
 ## use-PGroongaブランチの内容
 ※SQLServer利用時の影響など詳細なテストは行っていません。
 
-使用する全文検索モジュールの指定用に`App_Data/Parameters/Search.json`に`"FullTextEngine"`を追加しています。
-ここに、`"PGroonga"`、`"PGroonga"`を指定することで、各モジュールに応じたフルテキスト検索命令を発行します。
+使用する全文検索モジュールの指定用のKeyとして`App_Data/Parameters/Search.json`に`"FullTextEngine"`を追加しています。
+ここに、`"PG_Trgm"`、`"PGroonga"`を指定することで、各モジュールに応じたフルテキスト検索命令を発行します。
 ```
 {
     "SearchDocuments": false,
