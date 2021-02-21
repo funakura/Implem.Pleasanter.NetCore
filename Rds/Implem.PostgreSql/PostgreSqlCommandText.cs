@@ -7,10 +7,14 @@ namespace Implem.PostgreSql
 {
     internal class PostgreSqlCommandText : ISqlCommandText
     {
-        private static string fullTextEngine = "PG_Trgm";
+        private static string fullTextEngine = "";
         public string FullTextEngine
         {
-            set { fullTextEngine = value; }
+            set
+            {
+                if (!System.String.IsNullOrEmpty(value))
+                    fullTextEngine = value;
+            }
             get
             {
                 return fullTextEngine;

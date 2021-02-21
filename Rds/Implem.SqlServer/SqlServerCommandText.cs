@@ -9,10 +9,7 @@ namespace Implem.SqlServer
         public string FullTextEngine
         {
             set { }
-            get
-            {
-                return "";
-            }
+            get{ return ""; }
         }
 
         public string CreateDelete(string template)

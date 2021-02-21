@@ -901,7 +901,11 @@ namespace Implem.Pleasanter.Libraries.Search
             if (word != katakana) data.Add(katakana);
             if (word != hiragana) data.Add(hiragana);
 
-            switch (Parameters.Search.FullTextEngine)
+            string fullTextEngine = Parameters.Search.FullTextEngine ?? "";
+            if (Parameters.Rds.Dbms == "SQLServer")
+                fullTextEngine = "";
+
+            switch (fullTextEngine)
             {
                 case "":
                 case "PG_Trgm":

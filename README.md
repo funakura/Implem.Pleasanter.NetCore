@@ -1,6 +1,66 @@
-PostgreSQLの公式DockerImageでPG_Trgmで日本語が扱えなかったため、[use-PGroongaブランチで、PGroonga対応に変更中
+Pleasanterの評価でPostgreSQLの公式DockerImageを使ってフルテキストのサーチを試しましたが、PG_Trgmで日本語がうまく扱えませんでした。私の技術力では解決できませんでしたので、Pleasanterのソースコードを変更してPGroonga対応にしてみました。(use-PGroongaブランチ)
 
+変更による影響範囲など詳細には調べていませんが、以下の変更でPGroongaのサーチができました。
+(事前にPGroongaのIndex作成が必要です。)
+
+`Implem.Pleasanter.NetCore/Rds/Implem.PostgreSql/PostgreSqlCommandText.cs`
+```
+public string CreateFullTextWhereItem(string itemsTableName, string paramName)
+{
+   return $"(\"{itemsTableName}\".\"FullText\" &@~ @{paramName}#CommandCount#)";
+}
+```
+`mplem.Pleasanter.NetCore/Implem.Pleasanter/Libraries/Search/Indexes.cs`
+```
+private static string FullTextClause(string word)
+{
+   var data = new List<string> { word };
+   var katakana = CSharp.Japanese.Kanaxs.KanaEx.ToKatakana(word);
+   var hiragana = CSharp.Japanese.Kanaxs.KanaEx.ToHiragana(word);
+   if (word != katakana) data.Add(katakana);
+   if (word != hiragana) data.Add(hiragana);
+   return "(" + data
+      .SelectMany(part => new List<string>
+      {
+   part,
+   ForwardMatchSearch(part: part)
+      })
+      .Where(o => o != null)
+      .Distinct()
+      .Select(o => "\"" + o + "\"")
+      .Join(" OR ") + ")";
+}
+```
+
+## use-PGroongaブランチの内容
+※SQLServer利用時の影響など詳細なテストは行っていません。
+
+使用する全文検索モジュールの指定用に`App_Data/Parameters/Search.json`に`"FullTextEngine"`を追加しています。
+ここに、`"PGroonga"`、`"PGroonga"`を指定することで、各モジュールに応じたフルテキスト検索命令を発行します。
+```
+{
+    "SearchDocuments": false,
+    "CreateIndexes": true,
+    "PageSize": 20,
+    "DisableCrossSearch": false,
+    "FullTextEngine": "PGroonga"
+}
+```
+`PGroonga`のインストール方法は[こちら](https://pgroonga.github.io/ja/)を参照してください。
+
+
+DBへの`PGroonga`の設定方法は、`Pleasanter公式のCentOs7のインストール手順`の`2.9 全⽂検索⽤モジュール（pg_trgm）のインストール`を以下に置き換えてください。
+```
+postgres=# \c "Implem.Pleasanter";
+Implem.Pleasanter=# CREATE EXTENSION pgroonga;
+CREATE EXTENSION
+Implem.Pleasanter=# CREATE INDEX pgroonga_fulltext_index ON "Items" USING pgroonga ("FullText");
+Implem.Pleasanter=#\q
+```
 以下、オリジナルのREADME
+
+
+
 
 
 ![image](https://user-images.githubusercontent.com/12204265/48656589-f785b200-ea69-11e8-8278-3cf084ccbd27.png)

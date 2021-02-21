@@ -2,5 +2,6 @@
     "SearchDocuments": false,
     "CreateIndexes": true,
     "PageSize": 20,
-    "DisableCrossSearch": false
+    "DisableCrossSearch": false,
+    "FullTextEngine": "PGroonga"
 }
