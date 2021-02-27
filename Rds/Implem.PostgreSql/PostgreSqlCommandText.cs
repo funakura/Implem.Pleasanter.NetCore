@@ -10,15 +10,8 @@ namespace Implem.PostgreSql
         private static string fullTextEngine = "";
         public string FullTextEngine
         {
-            set
-            {
-                if (!System.String.IsNullOrEmpty(value))
-                    fullTextEngine = value;
-            }
-            get
-            {
-                return fullTextEngine;
-            }
+            set{ fullTextEngine = value;}
+            get{ return fullTextEngine;}
         }
 
         public string CreateDelete(string template)

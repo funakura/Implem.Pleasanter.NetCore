@@ -8,7 +8,7 @@ namespace Implem.SqlServer
     {
         public string FullTextEngine
         {
-            set { }
+            set{ }
             get{ return ""; }
         }
 
