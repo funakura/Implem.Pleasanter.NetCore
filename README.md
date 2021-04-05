@@ -1,4 +1,4 @@
-# Pleasanter Ver1.1.16.0で日本語検索できる様になりました。
+# Pleasanter Ver1.1.16.0で日本語検索がPG_Trgmできる様になりました。
 PostgreSQLの公式DockerImageのPG_Trgmで日本語検索がうまく扱えませんでした。私の技術力では解決できませんでしたので、Pleasanterのソースコードを変更してPGroonga対応にしてみました。(use-PGroongaブランチ)
 
 以下、オリジナルのREADME.md
