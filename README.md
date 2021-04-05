@@ -2,7 +2,7 @@
 PostgreSQLの公式DockerImageのPG_Trgmで日本語検索がうまく扱えませんでした。私の技術力では解決できませんでしたので、Pleasanterのソースコードを変更してPGroonga対応にしてみました。(use-PGroongaブランチ)
 
 以下、オリジナルのREADME.md
-
+---
 ![image](https://user-images.githubusercontent.com/12204265/48656589-f785b200-ea69-11e8-8278-3cf084ccbd27.png)
 
 ## プリザンター クロスプラットフォーム beta 版
